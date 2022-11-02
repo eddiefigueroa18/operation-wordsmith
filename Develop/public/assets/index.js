@@ -66,8 +66,8 @@ const renderActiveNotes = () => {
 //Acquires note data from the inputs, saves it to the db and updates the view output
 const engageNoteSave = function () {
     const newNote = {
-        title: $noteTitle.val(),
-        text: $noteText.val(),
+        title: noteTitle.val(),
+        text: noteText.val(),
     };
     saveNote(newNote).then(() => {
         acquireAndRenderNotes();
@@ -94,11 +94,91 @@ const engageNoteDelete = (e) => {
     });
 };
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 //Sets the "activeNote" and displays it on the page
-const engageNewNoteView = (e) => {
+const engageNoteView = (e) => {
     e.preventDefault();
     activeNote = JSON.parse(e.target.parentElement.getAttribute("data-note"));
     renderActiveNotes();
 };
 
+//This will set the "activeNote" to an empty object and allows user to input new notes
+const engageNewNoteView = (e) => {
+    activeNote = {};
+    renderActiveNotes();
+};
+
+//Hides and shows the save button 
+const engageRenderSaveBtn = () => {
+    if (!noteTitle.value.trim() || !noteText.value.trim()) {
+        hide(saveNoteBtn);
+    } else {
+        show(saveNoteBtn);
+    }
+};
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+
+//Render all the list note titles
+const renderNoteList = async (notes) => {
+    let jsonNotes = await notes.json();
+    if(window.location.pathname === "/notes") {
+        noteList.forEach((el) => (el.innerHTML = ""));
+    }
+    let noteListItems = [];
+
+
+//This should return  HTML elements regardless of delete button 
+    const createList = (text, delBtn = true) => {
+        const listEl = document.createElement("li");
+        listEl.classList.add("list-group-item");
+
+        const spanEl = document.createElement("span");
+        spanEl.classList.add("list-item-title");
+        spanEl.innerText = text;
+        spanEl.addEventListener("click", handleNoteView);
+        listEl.append(spanEl);
+
+        if (delBtn) {
+            const delBtnEl = document.createElement("i");
+            delBtnEl.classList.add(
+                "fas", 
+                "fa-trash-alt", 
+                "float-right", 
+                "text-danger", 
+                "delete-note"
+            );
+            delBtnEl.addEventListener("click", engageNoteDelete);
+            listEl.append(delBtnEl);
+        }
+        return listEl;
+    };
+
+    if(jsonNotes.length === 0) {
+        noteListItems.push(createList("No Saved Notes", false));
+    }
+
+    jsonNotes.forEach((note) => {
+        const li = createList(note.title);
+        li.dataset.note = JSON.stringify(note);
+        noteListItems.push(li);
+    });
+
+    if (window.location.pathname === "/notes") {
+        noteListItems.forEach((note) => noteList[0].append(note));
+    }
+};
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+
+//This acquires notes from the db and then renders them into the sidebar on the page
+const acquireAndRenderNotes = () => acquireNotes().then(renderNoteList);
+
+if (window.location.pathname === "/notes") {
+    saveNoteBtn.addEventListener("click", engageNoteSave);
+    newNoteBtn.addEventListener("click", engageNewNoteView);
+    noteTitle.addEventListener("keyup", engageRenderSaveBtn);
+    noteText.addEventListener("keyup", engageRenderSaveBtn);
+};
+
+acquireAndRenderNotes();
