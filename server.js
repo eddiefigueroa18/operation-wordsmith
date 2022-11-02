@@ -1,6 +1,6 @@
-//Add required variables
+//Node Modules
 const express = require("express");
-const fs = require("fs");
+// const fs = require("fs");
 const app = express();
 
 //Add routes for api and HTML
