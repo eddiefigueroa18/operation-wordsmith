@@ -21,7 +21,7 @@ router.post("/notes", (req, res) => {
 
 //delete
 router.delete("/notes/:id", (req, res) => {
-    deleteNewNote(notes, req.params.id);
+    deleteNewNote(req.params.id, notes);
     res.json(notes);
 });
 

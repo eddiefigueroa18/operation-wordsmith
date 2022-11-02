@@ -3,8 +3,8 @@ const express = require("express");
 const app = express();
 
 //Add routes for api and HTML
-const apiRouter = require("./Develop/routes/apiRouter");
-const htmlRouter = require("./Develop/routes/htmlRouter");
+const apiRouter = require("./routes/apiRouter");
+const htmlRouter = require("./routes/htmlRouter");
 
 //Behold, a PORT
 const PORT = process.env.PORT || 3001;
@@ -17,16 +17,16 @@ const PORT = process.env.PORT || 3001;
 app.use(express.urlencoded({extended: true}));
 //Specifies root directory from which to serve static assets
 //Serves static files like images, css, JavaScript, etc. 
-app.use(express.static("public"));
+
 //Parse incoming JSON data
 app.use(express.json());
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
-
+app.use(express.static("public/assets"));
 //ROUTES
 //Connects our routes to our application using ".use"
-app.use("/", htmlRouter);
 app.use("/api", apiRouter);
+app.use("/", htmlRouter);
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 

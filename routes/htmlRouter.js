@@ -5,16 +5,16 @@ const router = require("express").Router();
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 
 //METHODS
-router.get("/", (req, res) => {
-    res.sendFile(path.json(__dirname, "../assets/index.html"));
-});
+// router.get("/", (req, res) => {
+//     res.sendFile(path.join(__dirname, "../public/assets/index.html"));
+// });
 
 router.get("/notes", (req, res) => {
-    res.sendFile(path.join(__dirname, "../../assets/note.html"));
+    res.sendFile(path.join(__dirname, "../public/assets/note.html"));
 });
 
 router.get("*", (req, res) => {
-    res.sendFile(path.json(__dirname, "../assets/index.html"));
+    res.sendFile(path.join(__dirname, "../public/assets/index.html"));
 });
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
