@@ -9,7 +9,7 @@ const htmlRouter = require("./routes/htmlRouter");
 //Behold, a PORT
 const PORT = process.env.PORT || 3001;
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 
 //MIDDLEWARE
 //A built-in middleware function in express
@@ -21,14 +21,14 @@ app.use(express.urlencoded({extended: true}));
 //Parse incoming JSON data
 app.use(express.json());
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 app.use(express.static("public/assets"));
 //ROUTES
 //Connects our routes to our application using ".use"
 app.use("/api", apiRouter);
 app.use("/", htmlRouter);
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 
 //LISTEN
 //This function binds and listens to the connection on the specified HOST and PORT. Is an asynchronous operation.

@@ -20,3 +20,5 @@ router.get("*", (req, res) => {
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 
 module.exports = router;
+
+//THIS RUNS ON HEROKU WHILE THEN THE PUBLIC FOLDER FILES RUN IN THE USERS BROWSER
